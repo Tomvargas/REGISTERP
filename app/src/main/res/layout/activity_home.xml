@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Newapp.AppBarOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/logout"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="119dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:shadowColor="#00FFFFFF"
+                android:textColorHighlight="#FFFFFF"
+                app:icon="@android:drawable/ic_lock_power_off" />
+
+            <EditText
+                android:id="@+id/codeprod"
+                android:layout_width="193dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="Código de producto"
+                android:inputType="number"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnbuscar"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="99dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="buscar" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_home" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="50px">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NUEVO PRODUCTO"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnimage"
+            android:layout_width="314dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#50DFF1"
+            android:text="Seleccionar una imagen"
+            android:textColorLink="#FFFFFF" />
+
+        <ImageView
+            android:id="@+id/IVPreviewImage"
+            android:layout_width="175dp"
+            android:layout_height="162dp"
+            android:layout_below="@id/btnimage"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <EditText
+            android:id="@+id/txtcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Código de producto"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/txtname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre del producto"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/txtstock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Stock"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/txtdesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Descripción del producto"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/txtpre"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Precio"
+                android:inputType="numberDecimal" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/categorias"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="373dp"
+            android:layout_height="35dp"
+            android:text="Todos los datos estan verificados" />
+
+        <Button
+            android:id="@+id/btnguardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GUARDAR PRODUCTO" />
+
+        <Button
+            android:id="@+id/btneditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ACTUALIZAR PRODUCTO" />
+
+        <Button
+            android:id="@+id/btneliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ELIMINAR PRODUCTO" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
