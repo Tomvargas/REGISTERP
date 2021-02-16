@@ -10,10 +10,12 @@ import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
+
 public class db extends SQLiteOpenHelper {
     private static final String SqlCreateusr = "CREATE TABLE IF NOT EXISTS usuarios(user TEXT PRIMARY KEY, pass TEXT);";//consulta para crear tabla usuarios
     //consulta para crear tabla productos
-    private static final String SqlCreatepro = "CREATE TABLE IF NOT EXISTS productos(code TEXT PRIMARY KEY, name TEXT, des TEXT, pre REAL, cant INTEGER, categoria TEXT, img BLOB);";
+    private static final String SqlCreatepro = "CREATE TABLE IF NOT EXISTS productos(code TEXT PRIMARY KEY, name TEXT, des TEXT, pre REAL, cant INTEGER, categoria TEXT, img BLOB NOT NULL);";
 
     public db(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -71,16 +73,20 @@ public class db extends SQLiteOpenHelper {
             return false;
     }
     //Ingresa un producto a la base de datos
-    public boolean insertprod(String code, String name, String des, Float pre, int cant, String categoria, byte[] img ){
+    public boolean insertprod(String code, String name, String des, Float pre, int cant, String categoria,Bitmap img ){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        img.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        byte[] data = outputStream.toByteArray();
+
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("pre", pre);
-        contentValues.put("img", img);
         contentValues.put("code", code);
-        contentValues.put("des", des);
-        contentValues.put("categoria", categoria);
         contentValues.put("name", name);
+        contentValues.put("des", des);
+        contentValues.put("pre", pre);
         contentValues.put("cant", cant);
+        contentValues.put("categoria", categoria);
+        contentValues.put("img", data);
         long ins = MyDB.insert("productos", null, contentValues);
         if(ins==-1) return false;
         else return true;
@@ -88,6 +94,7 @@ public class db extends SQLiteOpenHelper {
 
     public Boolean editprod(String code, String name, String des, Float pre, int cant, String categoria, byte[] img ) {
         SQLiteDatabase DB = this.getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("code", code);
         contentValues.put("name", name);
@@ -147,10 +154,16 @@ public class db extends SQLiteOpenHelper {
 
     public Bitmap getImage(String code){
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor = MyDB.rawQuery("Select * from productos where code = ?", new String[]{code});
-        cursor.moveToFirst();
-        byte[] bitmap = cursor.getBlob(6);
-        Bitmap image = BitmapFactory.decodeByteArray(bitmap, 0 , bitmap.length);
-        return image;
+        Cursor cursor = MyDB.rawQuery("Select img from productos where code = ?", new String[]{code});
+        if(cursor.moveToFirst()) {
+            byte[] bitmap = cursor.getBlob(0);
+            cursor.close();
+            Bitmap image = BitmapFactory.decodeByteArray(bitmap, 0 , bitmap.length);
+            return image;
+        }
+        if(cursor !=null && !cursor.isClosed()){
+            cursor.close();
+        }
+        return null;
     }
 }

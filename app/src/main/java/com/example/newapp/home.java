@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -129,9 +130,6 @@ public class home extends AppCompatActivity {
                     //image.invalidate();
                     BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
-                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
-                    byte[] img = byteArray.toByteArray();
 
                     if(codigo.isEmpty() || nombre.isEmpty() || descripcion.isEmpty() || precio.isEmpty() ||cantidad.isEmpty()){
                         Toast.makeText(home.this, "Debe ingresar todos los campos", Toast.LENGTH_SHORT).show();
@@ -139,7 +137,7 @@ public class home extends AppCompatActivity {
 
                         Boolean check = valid.isChecked();
                         if(check){
-                            Boolean reg = DB.insertprod(codigo, nombre, descripcion, Float.parseFloat(precio), Integer.parseInt(cantidad), categoria, img);
+                            Boolean reg = DB.insertprod(codigo, nombre, descripcion, Float.parseFloat(precio), Integer.parseInt(cantidad), categoria, bitmap);
                             if(reg==true)
                                 Toast.makeText(home.this, "Producto registrado", Toast.LENGTH_SHORT).show();
                             else
@@ -170,7 +168,7 @@ public class home extends AppCompatActivity {
                     BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                    //bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
                     byte[] img = byteArray.toByteArray();
 
                     if(codigo.isEmpty() || nombre.isEmpty() || descripcion.isEmpty() || precio.isEmpty() ||cantidad.isEmpty()){
